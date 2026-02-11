@@ -18,7 +18,7 @@ const VisualExplanationInputSchema = z.object({
 });
 export type VisualExplanationInput = z.infer<typeof VisualExplanationInputSchema>;
 
-export const VisualExplanationOutputSchema = z.object({
+const VisualExplanationOutputSchema = z.object({
   imageUrl: z.string().describe('The URL of the generated image that visually explains the concept.'),
   isPlaceholder: z.boolean().optional().describe('Whether the image is a placeholder.'),
 });
@@ -50,7 +50,6 @@ const visualExplanationFlow = ai.defineFlow(
           isPlaceholder: false
       };
     } catch (error) {
-      console.error("Image generation failed, falling back to placeholder.", error);
       // The Imagen API may require a billed account. As a fallback, we'll use a placeholder image.
       const seed = concept.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
       const imageUrl = `https://picsum.photos/seed/${seed}/1024/576`;
