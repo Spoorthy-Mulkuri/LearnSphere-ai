@@ -1,5 +1,2 @@
-# Firebase Studio
-
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+# LearnSphere-ai
+This AI-driven learning platform delivers personalized ML education through text, code, audio, and visual explanations. It adapts content to user learning styles, making complex ML concepts easier to understand.
