@@ -87,19 +87,24 @@ export function VisualExplainerForm() {
       </Form>
 
       {isPending && (
-        <div className="mt-8 flex items-center justify-center">
-          <div className="w-full max-w-2xl aspect-video bg-muted animate-pulse rounded-lg flex items-center justify-center">
-            <Loader2 className="h-12 w-12 text-muted-foreground animate-spin" />
-          </div>
+         <div className="mt-8 space-y-6">
+            <div className="w-full max-w-3xl mx-auto aspect-video bg-muted animate-pulse rounded-lg flex items-center justify-center">
+                <Loader2 className="h-12 w-12 text-muted-foreground animate-spin" />
+            </div>
+            <div className="max-w-3xl mx-auto space-y-2">
+                <div className="w-full h-4 bg-muted animate-pulse rounded-md"></div>
+                <div className="w-5/6 h-4 bg-muted animate-pulse rounded-md"></div>
+                <div className="w-3/4 h-4 bg-muted animate-pulse rounded-md"></div>
+            </div>
         </div>
       )}
 
       {result && (
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>Visual Explanation</CardTitle>
+            <CardTitle>Visual Explanation for: &quot;{form.getValues("concept")}&quot;</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
             <Image
               src={result.imageUrl}
               alt={`Visual explanation for ${form.getValues("concept")}`}
@@ -108,6 +113,9 @@ export function VisualExplainerForm() {
               className="rounded-lg border"
               {...(result.isPlaceholder && { "data-ai-hint": hint })}
             />
+             <div className="prose prose-sm max-w-none dark:prose-invert whitespace-pre-wrap">
+              {result.explanation}
+            </div>
           </CardContent>
         </Card>
       )}
