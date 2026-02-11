@@ -61,13 +61,13 @@ export default function DashboardLayout({
         <SidebarFooter className="border-t border-sidebar-border p-2">
            <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton href="/dashboard/support" tooltip="Support">
+                <SidebarMenuButton onClick={() => router.push('/dashboard/support')} tooltip="Support">
                     <LifeBuoy />
                     <span>Support</span>
                 </SidebarMenuButton>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+                <SidebarMenuButton onClick={() => router.push('/dashboard/settings')} tooltip="Settings">
                     <Settings />
                     <span>Settings</span>
                 </SidebarMenuButton>

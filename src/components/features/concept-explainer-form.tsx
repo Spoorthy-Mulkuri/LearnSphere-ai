@@ -39,11 +39,22 @@ export function ConceptExplainerForm() {
   useEffect(() => {
     // On component unmount, ensure any active speech is stopped.
     return () => {
-      window.speechSynthesis.cancel();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
     };
   }, []);
 
   const handleSpeak = () => {
+    if (!('speechSynthesis' in window)) {
+        toast({
+            variant: "destructive",
+            title: "Audio Error",
+            description: "Your browser does not support text-to-speech.",
+        });
+        return;
+    }
+
     const synth = window.speechSynthesis;
     if (isSpeaking) {
       synth.cancel();
@@ -82,7 +93,9 @@ export function ConceptExplainerForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    window.speechSynthesis.cancel();
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
     setIsSpeaking(false);
     setExplanation(null);
     startTransition(async () => {

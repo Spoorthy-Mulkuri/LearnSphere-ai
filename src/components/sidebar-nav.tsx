@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from './ui/sidebar';
 import {
   Book,
@@ -9,7 +9,6 @@ import {
   LayoutDashboard,
   ListChecks,
   Mic,
-  Presentation,
   TrendingUp,
 } from 'lucide-react';
 
@@ -18,7 +17,6 @@ const navItems = [
   { href: '/dashboard/learning-path', icon: Book, label: 'Learning Path' },
   { href: '/dashboard/concept-explainer', icon: BrainCircuit, label: 'Concept Explainer' },
   { href: '/dashboard/code-generator', icon: Code, label: 'Code Generator' },
-  { href: '/dashboard/visual-aids', icon: Presentation, label: 'Visual Aids' },
   { href: '/dashboard/audio-explanations', icon: Mic, label: 'Audio Explanations' },
   { href: '/dashboard/progress-tracking', icon: TrendingUp, label: 'Progress' },
   { href: '/dashboard/quizzes', icon: ListChecks, label: 'Adaptive Quizzes' },
@@ -26,13 +24,14 @@ const navItems = [
 
 export function SidebarNav() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
-            href={item.href}
+            onClick={() => router.push(item.href)}
             isActive={pathname === item.href}
             tooltip={item.label}
           >

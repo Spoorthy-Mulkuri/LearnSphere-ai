@@ -12,7 +12,6 @@ import {
   Code,
   ListChecks,
   Mic,
-  Presentation,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -38,13 +37,6 @@ const features = [
     icon: Code,
     href: "/dashboard/code-generator",
     color: "text-emerald-500",
-  },
-  {
-    title: "Visual Learning Aids",
-    description: "Illustrate concepts with dynamic charts and diagrams.",
-    icon: Presentation,
-    href: "/dashboard/visual-aids",
-    color: "text-purple-500",
   },
   {
     title: "Audio Explanations",
