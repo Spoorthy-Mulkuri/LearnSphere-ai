@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,26 +23,27 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
-  BrainCircuit,
-  Code,
-  Home,
-  LayoutDashboard,
   LifeBuoy,
-  ListChecks,
-  Mic,
-  Presentation,
   Settings,
-  Book,
 } from "lucide-react";
 import { Icons } from "@/components/icons";
-import Link from "next/link";
 import { SidebarNav } from "@/components/sidebar-nav";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    toast({ title: 'Logged out successfully.' });
+    router.push('/');
+  };
+  
   return (
     <SidebarProvider>
       <Sidebar>
@@ -58,13 +61,13 @@ export default function DashboardLayout({
         <SidebarFooter className="border-t border-sidebar-border p-2">
            <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton href="#" tooltip="Support">
+                <SidebarMenuButton href="/dashboard/support" tooltip="Support">
                     <LifeBuoy />
                     <span>Support</span>
                 </SidebarMenuButton>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                <SidebarMenuButton href="#" tooltip="Settings">
+                <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
                     <Settings />
                     <span>Settings</span>
                 </SidebarMenuButton>
@@ -88,10 +91,10 @@ export default function DashboardLayout({
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/dashboard/support')}>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
