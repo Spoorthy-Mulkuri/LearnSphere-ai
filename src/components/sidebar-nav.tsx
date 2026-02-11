@@ -10,6 +10,7 @@ import {
   ListChecks,
   Mic,
   Presentation,
+  TrendingUp,
 } from 'lucide-react';
 
 const navItems = [
@@ -19,7 +20,7 @@ const navItems = [
   { href: '/dashboard/code-generator', icon: Code, label: 'Code Generator' },
   { href: '/dashboard/visual-aids', icon: Presentation, label: 'Visual Aids' },
   { href: '/dashboard/audio-explanations', icon: Mic, label: 'Audio Explanations' },
-  { href: '/dashboard/progress-tracking', icon: ListChecks, label: 'Progress' },
+  { href: '/dashboard/progress-tracking', icon: TrendingUp, label: 'Progress' },
   { href: '/dashboard/quizzes', icon: ListChecks, label: 'Adaptive Quizzes' },
 ];
 

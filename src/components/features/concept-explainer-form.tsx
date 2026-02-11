@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useEffect, useRef } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -35,24 +35,13 @@ export function ConceptExplainerForm() {
   const { toast } = useToast();
   
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
-    const synth = window.speechSynthesis;
-    const handleEnd = () => setIsSpeaking(false);
-
-    const currentUtterance = utteranceRef.current;
-    if (currentUtterance) {
-      currentUtterance.addEventListener('end', handleEnd);
-    }
-    
+    // On component unmount, ensure any active speech is stopped.
     return () => {
-      synth.cancel();
-      if (currentUtterance) {
-        currentUtterance.removeEventListener('end', handleEnd);
-      }
+      window.speechSynthesis.cancel();
     };
-  }, [utteranceRef.current]);
+  }, []);
 
   const handleSpeak = () => {
     const synth = window.speechSynthesis;
@@ -64,8 +53,20 @@ export function ConceptExplainerForm() {
 
     if (explanation) {
       const newUtterance = new SpeechSynthesisUtterance(explanation);
-      utteranceRef.current = newUtterance;
-      newUtterance.addEventListener('end', () => setIsSpeaking(false));
+      newUtterance.onend = () => {
+        setIsSpeaking(false);
+      };
+      newUtterance.onerror = (e) => {
+        if (e.error !== 'cancelled') {
+          console.error("Speech synthesis error", e);
+          toast({
+            variant: "destructive",
+            title: "Audio Error",
+            description: "Could not play the explanation.",
+          });
+        }
+        setIsSpeaking(false);
+      }
       synth.speak(newUtterance);
       setIsSpeaking(true);
     }
@@ -81,6 +82,8 @@ export function ConceptExplainerForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
     setExplanation(null);
     startTransition(async () => {
       try {
