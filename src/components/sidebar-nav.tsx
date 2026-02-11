@@ -9,12 +9,14 @@ import {
   LayoutDashboard,
   ListChecks,
   Mic,
+  Presentation,
 } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/dashboard/learning-path', icon: Book, label: 'Learning Path' },
   { href: '/dashboard/concept-explainer', icon: BrainCircuit, label: 'Concept Explainer' },
+  { href: '/dashboard/visual-explainer', icon: Presentation, label: 'Visual Explainer' },
   { href: '/dashboard/code-generator', icon: Code, label: 'Code Generator' },
   { href: '/dashboard/audio-explanations', icon: Mic, label: 'Audio Explanations' },
   { href: '/dashboard/quizzes', icon: ListChecks, label: 'Adaptive Quizzes' },

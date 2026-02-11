@@ -12,6 +12,7 @@ import {
   Code,
   ListChecks,
   Mic,
+  Presentation,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,13 @@ const features = [
     color: "text-amber-500",
   },
   {
+    title: "Visual Explainer",
+    description: "See complex concepts illustrated with AI-generated diagrams.",
+    icon: Presentation,
+    href: "/dashboard/visual-explainer",
+    color: "text-purple-500",
+  },
+  {
     title: "Code Generation Tool",
     description: "Generate Python code for ML algorithms on the fly.",
     icon: Code,
@@ -40,7 +48,7 @@ const features = [
   },
   {
     title: "Audio Explanations",
-    description: "Listen to concepts explained in various tones for auditory learners.",
+    description: "Listen to concepts explained for auditory learners.",
     icon: Mic,
     href: "/dashboard/audio-explanations",
     color: "text-red-500",

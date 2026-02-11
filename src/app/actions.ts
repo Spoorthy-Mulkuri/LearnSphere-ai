@@ -16,6 +16,10 @@ import {
   generateAdaptiveQuiz,
   type AdaptiveQuizInput,
 } from "@/ai/flows/adaptive-quizzes";
+import {
+  generateVisualExplanation,
+  type VisualExplanationInput,
+} from "@/ai/flows/visual-concept-explanation";
 
 export async function getLearningPath(input: PersonalizedLearningPathInput) {
   const result = await generatePersonalizedLearningPath(input);
@@ -34,5 +38,10 @@ export async function getCodeSnippet(input: CodeGenerationInput) {
 
 export async function getAdaptiveQuiz(input: AdaptiveQuizInput) {
   const result = await generateAdaptiveQuiz(input);
+  return result;
+}
+
+export async function getVisualExplanation(input: VisualExplanationInput) {
+  const result = await generateVisualExplanation(input);
   return result;
 }
