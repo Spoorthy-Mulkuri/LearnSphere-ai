@@ -18,8 +18,9 @@ const VisualExplanationInputSchema = z.object({
 });
 export type VisualExplanationInput = z.infer<typeof VisualExplanationInputSchema>;
 
-const VisualExplanationOutputSchema = z.object({
+export const VisualExplanationOutputSchema = z.object({
   imageUrl: z.string().describe('The URL of the generated image that visually explains the concept.'),
+  isPlaceholder: z.boolean().optional().describe('Whether the image is a placeholder.'),
 });
 export type VisualExplanationOutput = z.infer<typeof VisualExplanationOutputSchema>;
 
@@ -34,17 +35,29 @@ const visualExplanationFlow = ai.defineFlow(
     outputSchema: VisualExplanationOutputSchema,
   },
   async ({ concept }) => {
-    const { media } = await ai.generate({
-        model: 'googleai/imagen-4.0-fast-generate-001',
-        prompt: `Generate a clear, simple, and informative diagram or visual explanation for the following machine learning concept: "${concept}". The image should be easy to understand and suitable for a learning platform. Focus on illustrating the core idea of the concept. Style: Flat, 2D, infographic style with clear labels.`,
-    });
+    try {
+      const { media } = await ai.generate({
+          model: 'googleai/imagen-4.0-fast-generate-001',
+          prompt: `Generate a clear, simple, and informative diagram or visual explanation for the following machine learning concept: "${concept}". The image should be easy to understand and suitable for a learning platform. Focus on illustrating the core idea of the concept. Style: Flat, 2D, infographic style with clear labels.`,
+      });
 
-    if (!media) {
-        throw new Error('Failed to generate image.');
+      if (!media) {
+          throw new Error('Failed to generate image.');
+      }
+
+      return {
+          imageUrl: media.url,
+          isPlaceholder: false
+      };
+    } catch (error) {
+      console.error("Image generation failed, falling back to placeholder.", error);
+      // The Imagen API may require a billed account. As a fallback, we'll use a placeholder image.
+      const seed = concept.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const imageUrl = `https://picsum.photos/seed/${seed}/1024/576`;
+      return {
+          imageUrl,
+          isPlaceholder: true,
+      };
     }
-
-    return {
-        imageUrl: media.url,
-    };
   }
 );

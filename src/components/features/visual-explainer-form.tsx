@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import type { VisualExplanationOutput } from "@/ai/flows/visual-concept-explanation";
 
 const formSchema = z.object({
   concept: z.string().min(3, {
@@ -29,7 +30,7 @@ const formSchema = z.object({
 
 export function VisualExplainerForm() {
   const [isPending, startTransition] = useTransition();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [result, setResult] = useState<VisualExplanationOutput | null>(null);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,11 +41,11 @@ export function VisualExplainerForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setImageUrl(null);
+    setResult(null);
     startTransition(async () => {
       try {
         const result = await getVisualExplanation(values);
-        setImageUrl(result.imageUrl);
+        setResult(result);
       } catch (error) {
         toast({
           variant: "destructive",
@@ -55,6 +56,8 @@ export function VisualExplainerForm() {
       }
     });
   }
+
+  const hint = form.getValues("concept").split(" ").slice(0, 2).join(" ");
 
   return (
     <>
@@ -91,18 +94,19 @@ export function VisualExplainerForm() {
         </div>
       )}
 
-      {imageUrl && (
+      {result && (
         <Card className="mt-8">
           <CardHeader>
             <CardTitle>Visual Explanation</CardTitle>
           </CardHeader>
           <CardContent>
             <Image
-              src={imageUrl}
+              src={result.imageUrl}
               alt={`Visual explanation for ${form.getValues("concept")}`}
               width={1024}
               height={576}
               className="rounded-lg border"
+              {...(result.isPlaceholder && { "data-ai-hint": hint })}
             />
           </CardContent>
         </Card>
