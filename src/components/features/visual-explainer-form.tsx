@@ -57,8 +57,6 @@ export function VisualExplainerForm() {
     });
   }
 
-  const hint = form.getValues("concept").split(" ").slice(0, 2).join(" ");
-
   return (
     <>
       <Form {...form}>
@@ -110,8 +108,7 @@ export function VisualExplainerForm() {
               alt={`Visual explanation for ${form.getValues("concept")}`}
               width={1024}
               height={576}
-              className="rounded-lg border"
-              {...(result.isPlaceholder && { "data-ai-hint": hint })}
+              className="rounded-lg border bg-white"
             />
              <div className="prose prose-sm max-w-none dark:prose-invert whitespace-pre-wrap">
               {result.explanation}
