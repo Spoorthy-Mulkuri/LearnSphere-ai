@@ -16,13 +16,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, ArrowLeft, ArrowRight, Check, X } from "lucide-react";
+import { Loader2, ArrowLeft, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import type { QuizQuestion, AdaptiveQuiz as QuizData } from "@/lib/types";
+import type { AdaptiveQuiz as QuizData } from "@/lib/types";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
+import { Label } from "../ui/label";
 
 const formSchema = z.object({
   learningHistory: z.string().min(10, {
@@ -138,12 +139,10 @@ export function AdaptiveQuiz() {
                 <p className="font-semibold text-lg mb-6">{question.question}</p>
                 <RadioGroup onValueChange={(value) => handleAnswerSelect(currentQuestionIndex, value)} value={userAnswers[currentQuestionIndex]}>
                     {question.options.map((option, i) => (
-                        <FormItem key={i} className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                                <RadioGroupItem value={option} />
-                            </FormControl>
-                            <FormLabel className="font-normal">{option}</FormLabel>
-                        </FormItem>
+                        <div key={i} className="flex items-center space-x-3">
+                            <RadioGroupItem value={option} id={`q-${currentQuestionIndex}-option-${i}`} />
+                            <Label htmlFor={`q-${currentQuestionIndex}-option-${i}`} className="font-normal">{option}</Label>
+                        </div>
                     ))}
                 </RadioGroup>
             </CardContent>
