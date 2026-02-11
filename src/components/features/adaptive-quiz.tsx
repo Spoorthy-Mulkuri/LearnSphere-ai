@@ -22,7 +22,6 @@ import type { AdaptiveQuiz as QuizData } from "@/lib/types";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Badge } from "../ui/badge";
-import { Progress } from "../ui/progress";
 import { Label } from "../ui/label";
 
 const formSchema = z.object({
@@ -85,8 +84,6 @@ export function AdaptiveQuiz() {
       }, 0)
     : 0;
   
-  const scorePercentage = quizData ? (score / quizData.quizQuestions.length) * 100 : 0;
-
   const resetQuiz = () => {
     setQuizData(null);
     setShowResults(false);
@@ -100,13 +97,7 @@ export function AdaptiveQuiz() {
         <Card>
             <CardHeader>
                 <CardTitle>Quiz Results</CardTitle>
-                <div className="flex items-center gap-4 pt-4">
-                    <div className="text-4xl font-bold">{Math.round(scorePercentage)}%</div>
-                    <div className="flex-grow">
-                        <Progress value={scorePercentage} />
-                        <p className="text-sm text-muted-foreground mt-2">You answered {score} out of {quizData.quizQuestions.length} questions correctly.</p>
-                    </div>
-                </div>
+                <p className="text-muted-foreground pt-2">You answered <span className="font-bold text-foreground">{score}</span> out of <span className="font-bold text-foreground">{quizData.quizQuestions.length}</span> questions correctly.</p>
             </CardHeader>
             <CardContent className="space-y-4">
                 {quizData.quizQuestions.map((q, index) => (

@@ -9,7 +9,6 @@ import {
   LayoutDashboard,
   ListChecks,
   Mic,
-  TrendingUp,
 } from 'lucide-react';
 
 const navItems = [
@@ -18,7 +17,6 @@ const navItems = [
   { href: '/dashboard/concept-explainer', icon: BrainCircuit, label: 'Concept Explainer' },
   { href: '/dashboard/code-generator', icon: Code, label: 'Code Generator' },
   { href: '/dashboard/audio-explanations', icon: Mic, label: 'Audio Explanations' },
-  { href: '/dashboard/progress-tracking', icon: TrendingUp, label: 'Progress' },
   { href: '/dashboard/quizzes', icon: ListChecks, label: 'Adaptive Quizzes' },
 ];
 
