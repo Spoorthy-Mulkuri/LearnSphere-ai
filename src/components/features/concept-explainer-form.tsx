@@ -69,7 +69,6 @@ export function ConceptExplainerForm() {
       };
       newUtterance.onerror = (e) => {
         if (e.error !== 'cancelled') {
-          console.error("Speech synthesis error", e);
           toast({
             variant: "destructive",
             title: "Audio Error",
@@ -108,7 +107,6 @@ export function ConceptExplainerForm() {
           title: "An error occurred.",
           description: "Failed to generate explanation. Please try again.",
         });
-        console.error(error);
       }
     });
   }
